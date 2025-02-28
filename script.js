@@ -2,7 +2,7 @@
 const brandProjects = [
     {
         id: 1,
-        thumbnail: 'Images/Brand/MarcelPozo_BrandDesign_ClinicaAXIAL.png',
+        thumbnail: 'Images/Brand/MarcelPozo_BrandDesign_ClinicaAxial.png',
         title: 'Clínica AXIAL',
         year: '2022',
         description: 'Imagotype designed for Clínica AXIAL, clinic centre in Barcelona specialized in physiotherapy, psychology and nutrition.\n\nEach specialty is represented by a color and a shape, all interconnected through this axial link symbolized by the spine. In turn, the spine is interpreted as a path: the path a treatment follows, its process, step by step, just as defined by the points that compose it.'
