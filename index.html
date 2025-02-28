@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marcel Pozo Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/mixta-pro" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/kva2djk.css">
+</head>
+<body>
+    <main class="home-content">
+        <img src="Images/MarcelPozo_Signature_30.png" alt="Marcel Pozo Logo" class="main-logo">
+        <div class="pen-container" id="penTool">
+            <div class="pen-circle"></div>
+            <img src="Images/MarcelPozo_Pen.png" alt="Pen Icon" class="pen-icon">
+        </div>
+    </main>
+
+    <!-- Add canvas container -->
+    <div class="canvas-container" id="drawingCanvas">
+        <canvas id="canvas"></canvas>
+        <div class="canvas-close" id="closeCanvas">
+            <div class="close-circle"></div>
+            <span>&times;</span>
+        </div>
+    </div>
+
+    <div class="copyright">
+        © 2025 Marcel Pozo. All rights reserved.
+    </div>
+
+    <footer class="footer-menu">
+        <div class="footer-left">
+            <a href="index.html" class="footer-logo-link">
+                <img src="Images/MarcelPozo_Signature_30.png" alt="Footer Logo" class="footer-logo">
+            </a>
+            <nav class="categories">
+                <button class="nav-link" data-page="product">Product</button>
+                <button class="nav-link" data-page="brand">Brand</button>
+                <button class="nav-link" data-page="illustration">Illustration</button>
+            </nav>
+        </div>
+        <div class="footer-right">
+            <button class="nav-link" id="aboutBtn">About</button>
+            <button class="nav-link" id="contactBtn">Contact</button>
+        </div>
+    </footer>
+
+    <!-- Add these just before the popups -->
+    <div class="popup-overlay" id="aboutOverlay"></div>
+    <div class="popup-overlay" id="contactOverlay"></div>
+
+    <!-- About Popup -->
+    <div class="popup" id="aboutPopup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <img src="Images/MarcelPozo_About.png" alt="Marcel Pozo" class="about-image">
+            <h2>About</h2>
+            <div class="about-text">
+                <p>So this is Marcel. A 90's born in Barcelona, grown by the Mediterranean.<br>
+                    Grew up as a child surrounded by cardboard and paint, by pencils and tape. As an adult, that hasn't changed.</p>
+                <p>Always inspired by the world around, by its places and its people, and transforming it into new creations, into design, with the mindset of hopefully being able to inspire others and thus give back as much as received.</p>
+                <p>With experience in the furniture industry, mainly seating, having developed products both for home and contract sectors and lastly having worked as a Product Designer at Figueras Seating.</p>
+                <p>Interested in the user experience in product design, the interaction between the user and the designed product, and the meaning of materiality within this relationship.</p>
+
+                <h3>Studies</h3>
+                <p>First studied Engineering in Industrial Design and Product Development at Universitat Politècnica de Catalunya, in Terrassa, Spain<br>(2014 - 2018)</p>
+                <p>Then spent a year in Aalen, Germany, at Hochschule Aalen, deepening into product and industrial design<br>(2018 - 2019)</p>
+                <p>And finished back in Barcelona to specialize in furniture design, studying a Master at Elisava Barcelona School of Design and Engineering<br>(2023 - 2024)</p>
+
+                <h3>Further training</h3>
+                <p>Also enrolled an online specialization course in Graphic Design from the California Institute of the Arts<br>(2020)</p>
+                <p>And even was officially trained in industrial 3D printing with the HP Jet Fusion 500/300, 4200, 5200 3D Printer Series Service and Support Service Qualification by the HP Training Center<br>(2020)</p>
+
+                <h3>Skills</h3>
+                <h4>Software</h4>
+                <ul>
+                    <li>SolidWorks</li>
+                    <li>Adobe Illustrator</li>
+                    <li>Adobe Photoshop</li>
+                    <li>KeyShot</li>
+                </ul>
+
+                <h4>Handicraft and Tech</h4>
+                <ul>
+                    <li>Drawing and Sketching</li>
+                    <li>Modelling</li>
+                    <li>Carpintery</li>
+                    <li>Laser cut</li>
+                    <li>3D Printing</li>
+                    <li>Sewing + Machine sewing</li>
+                    <li>Pottery + Pottery wheel</li>
+                </ul>
+
+                <h4>Languages</h4>
+                <ul>
+                    <li>Catalan</li>
+                    <li>Spanish</li>
+                    <li>English</li>
+                    <li>German</li>
+                    <li>French</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Popup -->
+    <div class="popup" id="contactPopup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h2>Contact</h2>
+            <form class="contact-form" action="mailto:marcelpozo@gmail.com" method="POST" enctype="text/plain">
+                <div class="form-group">
+                    <label for="email">Your email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
