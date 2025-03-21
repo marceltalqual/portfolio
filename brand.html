@@ -3,59 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marcel Pozo | Brand</title>
+    <title>Marcel Pozo | Brand Design</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/mixta-pro" rel="stylesheet">
     <link rel="stylesheet" href="https://use.typekit.net/kva2djk.css">
 </head>
 <body>
-    <main class="brand-content">
-        <div class="project-grid">
-            <!-- Project thumbnails will be dynamically added here via JavaScript -->
-        </div>
-    </main>
+    <div class="portfolio-grid">
+        <!-- Grid items added by JavaScript -->
+    </div>
 
-    <div class="copyright">
+    <div class="copyright-footer">
         © 2025 Marcel Pozo. All rights reserved.
     </div>
 
-    <footer class="footer-menu">
-        <div class="footer-left">
-            <a href="index.html" class="footer-logo-link">
-                <img src="Images/MarcelPozo_Signature_30.png" alt="Footer Logo" class="footer-logo">
-            </a>
-            <nav class="categories">
-                <button class="nav-link" data-page="product">Product</button>
-                <button class="nav-link active" data-page="brand">Brand</button>
-                <button class="nav-link" data-page="illustration">Illustration</button>
-            </nav>
-        </div>
-        <div class="footer-right">
-            <button class="nav-link" id="aboutBtn">About</button>
-            <button class="nav-link" id="contactBtn">Contact</button>
-        </div>
-    </footer>
-
-    <!-- Project Popup -->
-    <div class="project-popup" id="projectPopup">
-        <div class="project-popup-content">
-            <span class="close-btn">&times;</span>
-            <div class="project-details">
-                <div class="project-image">
-                    <img src="" alt="Project Image" id="popupImage">
+    <!-- Popup overlay -->
+    <div class="popup-overlay" style="display: none;">
+        <div class="popup-content">
+            <button class="popup-close">&times;</button>
+            <button class="popup-nav prev">&larr;</button>
+            <button class="popup-nav next">&rarr;</button>
+            
+            <div class="popup-main">
+                <div class="popup-image">
+                    <!-- Image will be added here -->
                 </div>
-                <div class="project-info">
-                    <h2 class="project-title"></h2>
-                    <p class="project-year"></p>
-                    <p class="project-description"></p>
+                <div class="popup-info">
+                    <h2 class="popup-title"></h2>
+                    <p class="popup-year"></p>
+                    <p class="popup-description"></p>
                 </div>
             </div>
-            <button class="nav-arrow prev">&lt;</button>
-            <button class="nav-arrow next">&gt;</button>
+            
+            <div class="popup-secondary">
+                <!-- Additional content will be added here -->
+            </div>
         </div>
     </div>
 
     <script src="script.js"></script>
+
+    <!-- About Popup -->
+    <div class="info-popup about-popup" style="display: none;">
+        <div class="info-popup-content">
+            <button class="info-popup-close">×</button>
+            <img src="Images/Other/MarcelPozo_Design_About.jpg" alt="Marcel Pozo Design About" class="info-popup-image">
+            <h2 class="info-popup-title">About</h2>
+            <div class="info-popup-text">
+                <p>So this is Marcel. A 90's born in Barcelona, grown by the Mediterranean.<br>
+                    Grew up as a child surrounded by cardboard and paint, by pencils and tape. As an adult, that hasn't changed.</p>
+                <p>Always inspired by the world around, by its places and its people, and transforming it into new creations, into design, with the mindset of hopefully being able to inspire others and thus give back as much as received.</p>
+                <p>With experience in the furniture industry, mainly seating, having developed products both for home and contract sectors and lastly having worked as a Product Designer at Figueras Seating.</p>
+                <p>Interested in the user experience in product design, the interaction between the user and the designed product, and the meaning of materiality within this relationship.</p>
+
+                <h3 class="section-title">Studies and Training</h3>
+                <p>First studied Engineering in Industrial Design and Product Development at Universitat Politècnica de Catalunya, in Terrassa, Spain.</p>
+                <p>Then spent a year in Aalen, Germany, at Hochschule Aalen, deepening into product and industrial design.</p>
+                <p>And finished back in Barcelona to specialize in furniture design, studying a Master at Elisava Barcelona School of Design and Engineering.</p>
+
+                <p>Also enrolled an online specialization course in Graphic Design from the California Institute of the Arts.</p>
+                <p>And even was officially trained in industrial 3D printing with the HP Jet Fusion 3D printer series by the HP Training Center.</p>
+
+                <h3 class="section-title">Skills</h3>
+                <h4>Software</h4>
+                    <p>SolidWorks<br>
+                    Adobe Illustrator<br>
+                    Adobe Photoshop<br>
+                    KeyShot</p>
+                
+                <h4>Handicraft and Tech</h4>
+                    <p>Drawing and Sketching<br>
+                    Modelling<br>
+                    Carpintery<br>
+                    Laser cut<br>
+                    3D Printing<br>
+                    Sewing + Machine sewing<br>
+                    Pottery + Pottery wheel</p>
+                
+                <h4>Languages</h4>
+                    <p>Catalan<br>
+                    Spanish<br>
+                    English<br>
+                    German<br>
+                    French</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Popup -->
+    <div class="info-popup contact-popup" style="display: none;">
+        <div class="info-popup-content">
+            <button class="info-popup-close">×</button>
+            <h2 class="info-popup-title">Contact</h2>
+            <form class="contact-form">
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="Your email" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" name="message" placeholder="Message" required></textarea>
+                </div>
+                <button type="submit" class="contact-submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add this before the closing body tag -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <a href="index.html" class="footer-logo-link">
+                    <img src="Images/Other/MarcelPozo_Design_Signature.png" alt="Marcel Pozo Design" class="footer-logo desktop-logo">
+                    <img src="Images/Other/MarcelPozo_Design_Icon.png" alt="Marcel Pozo Design" class="footer-logo mobile-logo">
+                </a>
+                <nav class="footer-nav">
+                    <a href="product.html" class="nav-link">Product</a>
+                    <a href="brand.html" class="nav-link">Brand</a>
+                    <a href="illustration.html" class="nav-link">Illustration</a>
+                </nav>
+            </div>
+            <div class="footer-right">
+                <nav class="footer-nav desktop-menu">
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
+                <button class="mobile-menu-toggle">+</button>
+                <div class="mobile-menu">
+                    <a href="#" class="nav-link">About</a>
+                    <a href="#" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

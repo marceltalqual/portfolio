@@ -1,815 +1,995 @@
-:root {
-    --background-grey: #f5f5f5;
-    --text-color: #333333;  /* Very dark grey */
-    --footer-height: 3.125rem;  /* 50px */
-    --mobile-footer-height: 3.75rem;  /* 60px */
-    --footer-padding: 1.5625rem;  /* 25px */
-    --mobile-footer-padding: 0.9375rem;  /* 15px */
-}
-
-body {
+* {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--background-grey);
+    box-sizing: border-box;
 }
 
-/* Add overflow hidden only to home page */
-body:has(.home-content) {
-    overflow: hidden;
-}
-
-/* Home Page Styles */
-.home-content {
-    position: fixed;  /* Fix the content in viewport */
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-image: url('Images/MarcelPozo_Home.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.main-logo {
-    height: 55px;
-    width: auto;
-}
-
-/* Update Pen Icon Styles */
-.pen-container {
-    position: relative;
-    margin-top: 75px;
-    cursor: pointer;
-}
-
-.pen-icon {
-    height: 30px;  /* Reduced size */
-    width: auto;
-    position: relative;
-    z-index: 1;
-}
-
-.pen-circle {
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 55px;  /* Adjust circle size */
-    height: 55px;
-    border: 1.5px solid #ed1c24;  /* CMYK red */
-    border-radius: 50%;
-}
-
-.pen-container:hover {
-    transform: scale(1.1);
-}
-
-/* Footer Menu Styles */
-.footer-menu {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: var(--footer-height);
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 var(--footer-padding);
-    z-index: 2001;
-    box-shadow: 0 -2px 0.625rem rgba(0, 0, 0, 0.05);
-}
-
-.footer-left, .footer-right {
-    display: flex;
-    align-items: center;
-}
-
-/* Update gap handling */
-.categories, .footer-right {
-    display: flex;
-    gap: 20px;
-}
-
-.footer-left {
-    gap: 30px; /* Larger gap between logo and navigation */
-}
-
-.footer-logo {
-    height: 1.5625rem;  /* 25px */
-    width: auto;
-    display: block;
-}
-
-/* Navigation link styles */
-.nav-link {
-    font-family: 'Roboto', sans-serif;
+/*
+.roboto-300 {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
     font-weight: 300;
-    font-size: 0.875rem;  /* 14px */
-    color: var(--text-color);
-    text-decoration: none;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transform-origin: center;
-    transition: all 0.3s ease;
-    position: relative;
-    /* Ensure each button takes only the space it needs */
-    width: fit-content;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+  }
+*/
+
+body {
+    min-height: 100vh;
+    padding: 6px;
 }
 
-.nav-link:hover, .nav-link.active {
-    font-weight: 400;
-    transform: scale(1.1);
-}
-
-/* Remove any inherited button styles */
-.nav-link:focus {
-    outline: none;
-}
-
-/* Brand Page Styles */
-.brand-content {
-    padding: 0.625rem;
-    width: calc(100% - 1.25rem);
-    margin-left: auto;
-    margin-right: auto;
-    overflow-y: auto;  /* Allow scrolling */
-}
-
-.project-grid {
+.portfolio-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 0.625rem;  /* 10px */
-    width: 100%;
+    gap: 0.4vw;
+    max-width: 1600px;
+    margin: 0 auto;
 }
 
-/* Common hover effects for both brand and illustration thumbnails */
-.project-thumbnail {
-    cursor: pointer;
-    transition: all 0.3s ease;
-    transform-origin: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+.popup-header {
+    margin: 30px 30px 0px;
 }
 
-.project-thumbnail:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* Remove old hover styles */
-.thumbnail-container {
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: none;
-}
-
-/* Brand-specific styles */
-.brand-content .thumbnail-container {
-    aspect-ratio: 1;
+.project-item {
     position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* Creates 1:1 aspect ratio */
     overflow: hidden;
-}
-
-/* Illustration-specific styles */
-
-.illustration-content {
-    padding: 0.625rem;
-    width: calc(100% - 1.25rem);
-    margin-left: auto;
-    margin-right: auto;
-    overflow-y: auto;  /* Allow scrolling */
-}
-
-.illustration-content .project-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.625rem;
-    width: 100%;
-}
-
-.illustration-content .thumbnail-container {
-    width: 100%;
-    display: block;  /* Change from inline-block */
-}
-
-.illustration-content .project-thumbnail {
-    width: 100%;  /* Fill column width */
-    height: auto;  /* Maintain aspect ratio */
-    display: block;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* Remove background-color from both types of thumbnails */
-.brand-content .thumbnail-container,
-.illustration-content .thumbnail-container {
-    background-color: transparent;
-}
-
-.brand-content .project-thumbnail {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;  /* Changed from cover to contain */
-}
-
-/* Update Popup Styles - Split into two categories */
-/* 1. Project Popups */
-.project-popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4);
-    z-index: 2002;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);  /* For Safari support */
-}
-
-.project-popup.active {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.project-popup-content {
-    position: relative;
-    background-color: rgba(0, 0, 0, 0.25);
-    width: 75%;
-    max-width: 1000px;
-    display: flex;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-}
-
-.project-details {
-    display: flex;
-    width: 100%;
-    height: 100%;
-}
-
-.project-image {
-    flex: 1;  /* Takes up 1 part */
-    aspect-ratio: 1;  /* Square ratio */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.25);
-}
-
-.project-image img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;  /* Never distort, always show full image */
-}
-
-.project-info {
-    flex: 0.618;  /* Golden ratio: approximately 0.618 parts */
-    padding: 1.6rem;
-    background-color: var(--background-grey);
-    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Adding subtle shadow */
+    opacity: 0;
+    transform: scale(0.9);
+    animation: popIn 0.5s ease forwards;
 }
 
 .project-title {
-    font-family: 'mixta-pro', sans-serif;
-    font-weight: 400;
-    font-size: 2.2rem;
-    margin: 0;  /* Remove all margins */
-    line-height: 1.5;  /* Tighter line height */
-    color: var(--text-color);
-}
-
-.project-year {
-    font-family: 'Roboto', sans-serif;
+    position: absolute;
+    bottom: 5px;
+    left: 12px;
+    color: white;
+    font-family: 'Mixta Pro', serif;
     font-weight: 300;
-    font-size: 0.875rem;
-    margin: 0;  /* Remove all margins */
-    line-height: 1;  /* Tighter line height */
-    margin-bottom: 1.5rem;  /* Keep space before description */
-    color: var(--text-color);
+    font-size: 1.65rem;
+    z-index: 2;
+    text-shadow: 0 1px 7px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+ /* transform: translateY(10px); */
+    transition: all 0.5s ease;
 }
 
-.project-description {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 0.875rem;  /* 14px */
-    line-height: 1.6;  /* Adjusted line height */
-    color: var(--text-color);
+.project-item:hover .project-title {
+opacity: 0.95;
+transform: translateY(0);
 }
 
-/* Update navigation arrows positioning */
-.nav-arrow {
-    position: fixed;  /* Change from absolute to fixed */
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;  /* Remove white background */
-    border: none;
-    padding: 15px;
-    cursor: pointer;
-    font-size: 2rem;  /* Slightly smaller */
-    color: rgba(255, 255, 255, 0.7);  /* Light grey */
-    z-index: 2003;  /* Above popup content */
-    font-weight: 200;  /* Make thinner */
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
-.prev {
-    left: 5%;
+.project-item img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-.next {
-    right: 5%;
-}
-
-/* Update close button for project popup */
-.project-popup .close-btn {
-    position: fixed;  /* Change from absolute to fixed */
-    right: 5%;
-    top: 5%;
-    font-size: 2rem;  /* Slightly smaller */
-    color: rgba(255, 255, 255, 0.7);  /* Light grey */
-    cursor: pointer;
-    z-index: 2003;
-    font-weight: 200;  /* Make thinner */
-}
-
-/* Add these styles for the footer logo link */
-.footer-logo-link {
-    display: block;
-    transform-origin: center;
-    transition: all 0.3s ease;
-}
-
-.footer-logo-link:hover {
+.project-item:hover img {
     transform: scale(1.05);
 }
 
-/* Update Copyright Styles */
-.copyright {
-    text-align: center;
-    padding: 15px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    font-size: 12px;
-    color: #666;
-    margin-bottom: var(--footer-height); /* Space for footer */
-}
-
-/* Update responsive styles */
-@media (max-width: 1024px) {
-    .project-grid {
-        grid-template-columns: repeat(3, 1fr);
+/* Responsive breakpoints */
+@media (max-width: 1200px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0.5vw;
     }
 }
 
 @media (max-width: 768px) {
-    .project-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    /* Adjust popup size for tablets */
-    .popup {
-        max-width: 90%;
-        right: 5% !important;  /* Override individual popup positions */
-    }
-
-    .project-popup-content {
-        width: 85%;
-        aspect-ratio: auto;
-        flex-direction: column;
-        height: 85vh;
-    }
-
-    .project-details {
-        flex-direction: column;
-    }
-
-    .project-image {
-        width: 100%;
-        aspect-ratio: 1;  /* Maintain square ratio */
-    }
-
-    .project-info {
-        flex: 1;  /* Take remaining height */
-    }
-
-    .footer-menu {
-        padding: 0 var(--mobile-footer-padding);
-    }
-
-    .footer-left {
-        gap: 1.25rem;  /* 20px */
-    }
-
-    .categories {
-        gap: 1rem;  /* 16px */
-    }
-
-    .footer-right {
-        gap: 1rem;
-    }
-
-    .footer-logo {
-        height: 1.375rem;  /* 22px */
-    }
-
-    .nav-link {
-        font-size: 0.8125rem;  /* 13px */
+    .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.6vw;
     }
 }
 
 @media (max-width: 480px) {
-    :root {
-        --footer-height: var(--mobile-footer-height);
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8vw;
     }
-
-    /* Mobile footer menu */
-    .footer-menu {
-        padding: 0 var(--mobile-footer-padding);
-    }
-
-    /* Hide regular menu */
-    .categories {
-        display: none;
-    }
-
-    /* Add hamburger menu */
-    .menu-toggle {
-        display: flex;
-        margin-left: 1rem;
-    }
-
-    /* Mobile menu overlay */
-    .mobile-menu {
-        display: none;
-        position: fixed;
-        bottom: var(--mobile-footer-height);
-        left: 0;
-        right: 0;
-        background: white;
-        padding: 0.9375rem;
-        box-shadow: 0 -2px 0.625rem rgba(0, 0, 0, 0.05);
-    }
-
-    .mobile-menu.active {
-        display: block;
-    }
-
-    .mobile-menu .nav-link {
-        display: block;
-        width: 100%;
-        text-align: center;
-        padding: 0.625rem 0;
-    }
-
-    /* Adjust grid for mobile */
-    .project-grid {
-        grid-template-columns: repeat(1, 1fr);
-        gap: 15px;
-    }
-
-    /* Mobile popup styles */
-    .popup {
-        width: 100%;
-        max-width: 100%;
-        height: calc(100vh - var(--mobile-footer-height));
-        right: 0 !important;
-        left: 0;
-        bottom: var(--mobile-footer-height);
-    }
-
-    .popup-content {
-        padding: 15px;
-    }
-
-    /* Adjust project popup for mobile */
-    .project-popup-content {
-        width: 90%;  /* Slightly larger on mobile but still floating */
-        height: 90vh;
-    }
-
-    .project-details {
-        flex-direction: column;
-    }
-
-    .project-info {
-        padding: 1rem;
-    }
-
-    /* Adjust typography for mobile */
-    .popup h2, .project-popup h2 {
-        font-size: 24px;
-    }
-
-    /* Adjust navigation arrows for mobile */
-    .nav-arrow {
-        padding: 15px;
-    }
-
-    .footer-logo {
-        height: 1.25rem;  /* 20px */
+    
+    body {
+        padding: 0.8vw;
     }
 }
 
-/* About Popup Styles */
-.about-image {
-    width: calc(100% + 3rem);  /* Extend beyond padding */
-    margin: -1.5rem -1.5rem 1.5rem;  /* Negative margin to counter padding */
-    display: block;
-}
-
-.about-text {
-    padding: 0 1.5rem;
-}
-
-.about-text p {
-    margin-bottom: 1rem;
-    line-height: 1.6;
-}
-
-.about-text h3 {
-    font-family: 'mixta-pro', sans-serif;
-    font-size: 1.5rem;
-    margin: 2rem 0 1rem;
-    color: var(--text-color);
-}
-
-.about-text h4 {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    font-size: 1rem;
-    margin: 1.5rem 0 0.5rem;
-    color: var(--text-color);
-}
-
-.about-text ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 1rem;
-}
-
-.about-text ul li {
-    margin-bottom: 0.25rem;
-    font-weight: 300;
-    line-height: 1.6;
-}
-
-/* Update popup styles */
+/* Popup styles */
 .popup-overlay {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: calc(100% - var(--footer-height));  /* Don't cover footer */
-    background-color: rgba(0, 0, 0, 0.65);
-    z-index: 1998;  /* Below popup and footer */
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);  /* For Safari support */
-}
-
-.popup {
-    display: none;
-    position: fixed;
-    top: 0.625rem;
-    height: calc(100vh - var(--footer-height) - 4.25rem); /* Account for top gap and footer */
-    width: 100%;
-    max-width: 34.375rem;
-    background-color: white;
-    z-index: 1999;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-/* Position popups above their respective buttons */
-#aboutPopup {
-    right: 75px;  /* Adjust based on About button position */
-}
-
-#contactPopup {
-    right: 25px;  /* Adjust based on Contact button position */
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
 }
 
 .popup-content {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    background: transparent;
+}
+
+.popup-main {
+    display: flex;
+    height: 0;
+    padding-bottom: 61.8%; /* Golden ratio 1:1.618 */
+    position: relative;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+}
+
+.popup-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 61.8%; /* 1.618/(1+1.618) ≈ 61.8% */
     height: 100%;
+    overflow: hidden;
+    min-width: 0;
+   /* background: rgba(0, 0, 0, 0.4);*/
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+}
+
+.popup-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.popup-info {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 38.2%; /* 1/(1+1.618) ≈ 38.2% */
+    height: 100%;
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.popup-title {
+    font-family: 'mixta-pro', serif;
+    font-weight: 400;
+    font-size: 2.15rem;
+    background: #f5f5f5;
+}
+
+.popup-info-content {
+    flex: 1;
     overflow-y: auto;
-    background-color: var(--background-grey);
-    padding: 1.5rem;
+    padding: 0 30px 30px;
 }
 
-/* Main title */
-.popup h2 {
-    font-family: 'mixta-pro', sans-serif;
-    font-weight: 400;
-    font-size: 2rem;
-    margin: 0 0 1.5rem;
-    color: var(--text-color);
-    padding-left: 0;
-    padding-right: 0;
-}
-
-/* Section titles */
-.popup h3 {
-    font-family: 'mixta-pro', sans-serif;
-    font-weight: 400;
-    font-size: 1.5rem;
-    margin: 2rem 0 1rem;
-    color: var(--text-color);
-    padding-left: 0;
-    padding-right: 0;
-}
-
-/* Subsection titles */
-.popup h4 {
-    font-family: 'mixta-pro', sans-serif;
-    font-weight: 400;
-    font-size: 1.25rem;
-    margin: 1.5rem 0 1rem;
-    color: var(--text-color);
-    padding-left: 0;
-    padding-right: 0;
-}
-
-/* All regular text */
-.popup p,
-.popup li,
-.form-group label,
-.form-group input,
-.form-group textarea {
+.popup-year {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    font-size: 0.875rem;  /* 14pt */
-    line-height: 1.6;
-    color: var(--text-color);
-    padding-left: 0;
-    padding-right: 0;
+    font-size: 0.825rem; /* Same as description */
+    margin-bottom: 1.5rem;
 }
 
-/* Remove padding from About text */
-.about-text {
-    padding: 0;
-}
-
-/* Update form styles */
-.form-group input,
-.form-group textarea {
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 0;  /* Remove rounded corners */
-    background-color: white;
-}
-
-/* Update send button */
-.submit-btn {
-    align-self: flex-start;  /* Align to left */
+.popup-description, .popup-secondary {
     font-family: 'Roboto', sans-serif;
-    font-weight: 500;  /* Medium */
-    font-size: 0.875rem;
-    padding: 0;  /* Remove padding */
+    font-weight: 300;
+    font-size: 0.825rem;
+    line-height: 1.6;
+}
+
+.popup-secondary {
+    margin-top: 20px;
+    padding: 40px;
+    background: #f5f5f5;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.4);
+}
+
+.popup-description {
+    margin-top: 0;
+}
+
+.popup-close {
+    position: fixed;
+    right: 40px;
+    top: 40px;
     background: none;
-    color: var(--text-color);
     border: none;
+    color: white;
+    font-size: 2rem;
     cursor: pointer;
-    transition: font-weight 0.3s ease;
+    z-index: 1001;
 }
 
-.submit-btn:hover {
-    font-weight: 700;  /* Bold on hover */
+.popup-nav {
+    position: fixed;
+    top: 50vh;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 20px;
 }
 
-/* Close button */
-.popup .close-btn {
-    position: absolute; /* Position relative to popup */
-    right: 1rem;
-    top: 0.75rem;
+.popup-nav.prev {
+    left: 40px;
+}
+
+.popup-nav.next {
+    right: 40px;
+}
+
+/* Animation for popup */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.popup-overlay {
+    animation: fadeIn 0.3s ease;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .description-label {
+        margin-top: 2rem !important; /* Using !important to override the default info-label margin */
+    }
+
+    .popup-content {
+        width: 94%;
+        margin: 0 auto;
+    }
+
+    .popup-main {
+        height: auto;
+        padding-bottom: 0;
+        flex-direction: column;
+    }
+
+    .popup-image {
+        position: relative;
+        width: 100%;
+    }
+
+    .popup-info {
+        position: relative;
+        width: 100%;
+        padding: 0 25px 25px;
+    }
+
+    .popup-info-content {
+        padding: 0;
+    }
+
+    .popup-header {
+        margin: 20px 0px 0px;
+    }
+
+    .popup-close {
+        position: fixed;
+        right: 20px;
+        top: 20px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+    }
+
+    .popup-nav {
+        display: none;
+    }
+}
+
+/* Small mobile adjustments */
+@media (max-width: 480px) {
+
+    .popup-content {
+        width: 92%;
+        margin: 0 auto;
+    }
+
+    .popup-info {
+        padding: 0 20px 20px;
+    }
+
+    .popup-secondary {
+        padding: 20px;
+    }
+
+
+}
+
+/* Ensure popup doesn't overflow viewport height */
+@media (max-height: 800px) {
+    .popup-overlay {
+        align-items: flex-start;
+        overflow-y: auto;
+        padding: 20px 0;
+    }
+
+    .popup-content {
+        margin: 20px auto;
+    }
+}
+
+.info-row {
+    margin-bottom: 1rem;
+}
+
+.info-label {
+    display: block;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 0.675rem;
+    margin-top: 0.5rem;
+    color: #8b8b8b;
+}
+
+.info-content {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 0.825rem;
+    line-height: 1.6;
+}
+
+.color-swatches {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.color-swatch {
+    width: 27px;
+    height: 27px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.section-title {
+    font-family: 'mixta-pro', serif;
+    font-weight: 400;
+    font-size: 1.2rem;
+    margin: 2rem 0 1rem;
+}
+
+.popup-secondary p {
+    margin-bottom: 1rem;
+}
+
+.popup-secondary img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Add this to your CSS */
+.slogan-content {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 0.95rem;
+    color: #454545;
+    line-height: 1.3;
+    margin: 0 0 2rem;
+}
+
+/* Hide the slogan label */
+.slogan-label {
+    display: none;
+}
+
+/* Add this to your CSS */
+.description-label {
+    margin-top: 3rem; /* Using !important to override the default info-label margin */
+}
+
+/* Add these styles */
+.verse-content {
+    font-family: 'mixta-pro', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+.verse-label {
+    display: none;
+}
+
+/* Copyright styles */
+.copyright-footer {
+    text-align: center;
+    padding: 40px 0 65px; /* Increased bottom padding to 80px */
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.copyright-popup {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 0.75rem;
+    color: #666;
+    padding-top: 30px;
+    text-align: center;
+}
+
+/* Footer styles ------------------------------------------------------ */
+.main-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgb(255, 255, 255, 0.5);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+    z-index: 100;
+}
+
+.footer-content {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 10px 30px; /* Change 13px to adjust footer height */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 35px; /* Adjust this value to change the space between logo and words */
+}
+
+.footer-logo {
+    height: 33px;
+    width: auto;
+    transform-origin: center;
+    transition: transform 0.2s ease;
+}
+
+.footer-logo:hover {
+    transform: scale(1.05);
+}
+
+.mobile-logo {
+    display: none;
+}
+
+.footer-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: #333;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-block; /* Added to prevent affecting other elements */
+    transform-origin: center;
+}
+
+.nav-link:hover {
+    color: #000;
+    transform: scale(1.1);
+    font-weight: 400;
+}
+
+.nav-link.active {
+    font-weight: 400;
+    color: #000;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
     font-size: 1.5rem;
-    color: var(--text-color);
+    font-weight: 200;
+    color: #333;
     cursor: pointer;
-    z-index: 2000;
+    padding: 5px 10px;
+    font-family: 'Roboto', sans-serif;
+    transition: all 0.2s ease;
+    transform-origin: center;
+}
+
+.mobile-menu-toggle:hover {
+    color: #000;
+    transform: scale(1.1);
+    font-weight: 400;
+}
+
+.mobile-menu {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    background: rgb(255, 255, 255, 0.9);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .desktop-logo {
+        display: none;
+    }
+
+    .mobile-logo {
+        display: block;
+    }
+
+    .desktop-menu {
+        display: none;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .footer-content {
+        padding: 10px 25px; /* Change 10px to adjust mobile footer height */
+    }
+
+    .footer-left {
+        gap: 20px; /* Adjust this value for mobile spacing */
+    }
+
+    .nav-link {
+        font-size: 0.8rem; /* Slightly smaller font size for mobile */
+    }
+
+    /* Show mobile menu when active */
+    .mobile-menu.active {
+        display: flex;
+    }
+}
+
+/* Info Popup Styles ------------------------------------------------------------ */
+.info-popup {
+    position: fixed;
+    bottom: 70px;
+    right: 30px;
+    background: #f5f5f5;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
+    z-index: 99;
+    width: 500px;
+    height: 80vh; /* Limit height relative to viewport */
+    animation: slideUp 0.3s ease;
+    overflow: hidden; /* Prevent content from spilling out */
+}
+
+.info-popup-content {
+    height: 100%;
+    overflow-y: auto; /* Enable vertical scrolling */
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
+    padding: 25px 30px 50px;
+    position: relative;
+}
+
+/* Keep other styles the same */
+.info-popup-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.info-popup-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.info-popup-content::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
+}
+
+.info-popup-content::-webkit-scrollbar-thumb:hover {
+    background-color: #666;
+}
+
+.info-popup-close {
+    position: absolute;
+    right: 20px;
+    top: 13px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #333;
+    transition: transform 0.2s ease;
+    z-index: 2;  /* Ensure it's above the image */
+}
+
+.info-popup-close:hover {
+    transform: scale(1.1);
+}
+
+.info-popup-title {
+    font-family: 'mixta-pro', serif;
+    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.info-popup-text {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #333;
+}
+
+.info-popup-image {
+    width: calc(100% + 60px);  /* Desktop width */
+    height: auto;
+    margin: -25px -30px 25px;  /* Desktop margin */
+    display: block;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile responsive styles for info popups */
+@media (max-width: 768px) {
+    .info-popup {
+        width: 92%;
+        right: 4%;
+        bottom: 70px;
+    }
+
+    .info-popup-content {
+        padding: 25px 25px 50px;
+    }
+
+    .info-popup-image {
+        width: calc(100% + 50px);  /* Mobile width */
+        margin: -25px -25px 25px;  /* Mobile margin */
+    }
+}
+
+.info-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 50px; /* Adjust this value to match your footer height */
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 98; /* Just below the popup's z-index */
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Update popup z-index to ensure it's above the overlay */
+.info-popup {
+    z-index: 99;
 }
 
 /* Contact Form Styles */
 .contact-form {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    width: calc(100% - 1.25rem);
-    padding: 0; /* Remove any padding */
+    gap: 20px;
 }
 
 .form-group {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
 }
 
-.form-group label {
-    text-align: left;  /* Keep labels left-aligned */
-    padding-left: 0;
-    padding-right: 0;
-}
-
-.form-group input,
-.form-group textarea {
+.contact-form input,
+.contact-form textarea {
     width: 100%;
-    padding: 0.5rem;
+    padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 0;
-    background-color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    background: transparent;
 }
 
-.form-group textarea {
+.contact-form textarea {
     min-height: 150px;
     resize: vertical;
 }
 
-/* Center the send button */
-.submit-btn {
-    align-self: center;
-    margin-top: 0.5rem;
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #999;
 }
 
-/* Drawing Canvas Styles */
-.canvas-container {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: calc(100vh - var(--footer-height));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    z-index: 1999;
+.contact-submit {
+    background: none;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    padding: 5px 20px;
+    margin: 0 auto;
+    display: block;
+    transform-origin: center;
+    transition: all 0.2s ease;
 }
 
-#canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    cursor: url('Images/MarcelPozo_PenCursor.png') 0 15, crosshair;  /* Adjust offset to match pen tip */
+.contact-submit:hover {
+    transform: scale(1.1);
+    font-weight: 500;
 }
 
-.canvas-close {
-    position: fixed;
-    bottom: calc(var(--footer-height) + 10px);
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 40px;
+.footer-nav .nav-link.active {
+    color: #000;
+    font-weight: 400;
+    /* You can adjust these styles to match your design */
+}
+
+/* Home page specific styles */
+.home-page {
+    min-height: 100vh;
+    background-image: url('Images/Other/MarcelPozo_Design_Home.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.home-logo {
+    text-align: center;
+    margin-top: -70px;
+}
+
+.home-logo img {
+    width: auto;
+    max-height: 85px;
+}
+
+.mobile-home-logo {
+    display: none;
+}
+
+/* Update footer logo styles */
+.footer-logo-link {
+    text-decoration: none;
+    display: block;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .desktop-home-logo {
+        display: none;
+    }
+
+    .mobile-home-logo {
+        display: block;
+    }
+
+    .home-logo img {
+        max-width: 280px;
+        height: auto;
+    }
+}
+
+/* Update the pen logo styles */
+.pen-logo {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 10;
     cursor: pointer;
-    z-index: 2000;
+    transition: transform 0.2s ease;
 }
 
-.close-circle {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border: 1.75px solid #929292;
-    border-radius: 50%;
-}
-
-.canvas-close span {
-    position: relative;
-    color: #929292;
-    font-size: 32px;
-    font-weight: 200;
-    z-index: 2001;
-}
-
-.canvas-close:hover {
+.pen-logo:hover {
     transform: scale(1.1);
 }
 
-/* Fix copyright position and visibility on home page */
-.home-content + .copyright {
+.pen-logo img {
+    width: auto;
+    height: 30px;
+    pointer-events: none; /* This ensures the image doesn't interfere with click events */
+}
+
+/* Add this to your mobile media query */
+@media (max-width: 768px) {
+    /* ... existing mobile styles ... */
+    
+    .pen-logo {
+        top: 22px;
+        right: 20px;
+    }
+
+    .pen-logo img {
+        height: 25px;
+    }
+}
+
+/* Canvas styles */
+#drawingCanvas {
     position: fixed;
-    bottom: calc(var(--footer-height) + 0.625rem);
+    top: 0;
     left: 0;
     width: 100%;
-    margin: 0;
+    height: 100%;
+    z-index: 9;
+    background: transparent;
+    cursor: crosshair;
+}
+
+.close-canvas {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 11;
+}
+
+.close-canvas-btn {
+    background: none;
+    border: none;
+    color: #919191;
+    font-size: 40px;
+    font-weight: 200;
+    cursor: pointer;
     padding: 0;
-    z-index: 1500;  /* Increase z-index to ensure visibility */
-    color: #333333;  /* Darker color for better visibility */
-    text-shadow: 0 0 3px rgba(255, 255, 255, 0.8);  /* Add subtle white glow for legibility */
-    background-color: rgba(255, 255, 255, 0.7);  /* Semi-transparent white background */
-    padding: 5px 0;  /* Add some vertical padding */
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.close-canvas-btn:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .close-canvas {
+        top: 20px;
+        right: 20px;
+    }
+    
+    .close-canvas-btn {
+        font-size: 35px;
+        font-weight: 200;
+        width: 20px;
+        height: 26px;
+    }
+}
+
+/* Send canvas button and popup styles */
+.send-canvas {
+    position: fixed;
+    top: 80px;  /* Position below the close button */
+    right: 30px;
+    z-index: 11;
+}
+
+.send-canvas-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.send-canvas-btn:hover {
+    transform: scale(1.1);
+}
+
+.send-canvas-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.send-popup {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 10px;
+    background: white;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 250px;
+}
+
+.send-popup-text {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.send-submit-btn {
+    background: #E31C23;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+    transition: transform 0.2s ease;
+}
+
+.send-submit-btn:hover {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .send-canvas {
+        top: 65px;
+        right: 20px;
+    }
 }
