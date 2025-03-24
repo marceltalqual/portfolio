@@ -596,7 +596,7 @@ transform: translateY(0);
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
     z-index: 99;
     width: 500px;
-    height: 80vh; /* Limit height relative to viewport */
+    height: 77vh; /* Limit height relative to viewport */
     animation: slideUp 0.3s ease;
     overflow: hidden; /* Prevent content from spilling out */
 }
@@ -992,4 +992,23 @@ transform: translateY(0);
         top: 65px;
         right: 20px;
     }
+}
+
+/* Contact popup header styles */
+.contact-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.linkedin-icon {
+    width: 20px;  /* Adjust size as needed */
+    height: 20px;
+    transition: transform 0.3s ease;
+    opacity: 0.8;
+}
+
+.linkedin-link:hover .linkedin-icon {
+    transform: scale(1.1);
+    opacity: 0.95;
 }
