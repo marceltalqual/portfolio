@@ -1004,6 +1004,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Separate cursor initialization function
 function initializeCursor() {
+    // Only initialize cursor if not a touch device
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+        return; // Exit if touch device
+    }
+
     // Remove any existing cursors
     const existingCursor = document.querySelector('.custom-cursor');
     if (existingCursor) {
