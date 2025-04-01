@@ -10,63 +10,42 @@
     <link rel="stylesheet" href="https://use.typekit.net/kva2djk.css">
 </head>
 <body class="home-page">
-    <div class="pen-logo">
-        <img src="Images/Other/MarcelPozo_Design_Pen.png" alt="Marcel Pozo Design Pen">
-    </div>
+    <div class="spotlight-background"></div>
+    <canvas id="drawingCanvas"></canvas>
     <div class="home-logo">
         <img src="Images/Other/MarcelPozo_Design_Icon.png" alt="Marcel Pozo Design" class="desktop-home-logo">
         <img src="Images/Other/MarcelPozo_Design_Signature.png" alt="Marcel Pozo Design" class="mobile-home-logo">
     </div>
 
-    <!-- Add this after the pen-logo div -->
-    <div class="close-canvas" style="display: none;">
-        <button class="close-canvas-btn">×</button>
-    </div>
-    <canvas id="drawingCanvas" style="display: none;"></canvas>
+<!-- About Popup -->
+<div class="info-popup about-popup" style="display: none;">
+    <div class="info-popup-content">
+        <button class="info-popup-close">×</button>
+        <img src="Images/Other/MarcelPozo_Design_About.jpg" alt="Marcel Pozo Design About" class="info-popup-image">
+        <h2 class="info-popup-title">About</h2>
+        <div class="info-popup-text">
+            <p>So this is Marcel. A 90's born in Barcelona, grown by the Mediterranean.<br>
+                Grew up as a child surrounded by cardboard and paint, by pencils and tape. As an adult, that hasn't changed.</p>
+            <p>Always inspired by the world around, by its places and its people, and transforming it into new creations, into design, with the mindset of hopefully being able to inspire others and thus give back as much as received.</p>
+            <p>With experience in the furniture industry, mainly seating, having developed products both for home and contract sectors and lastly having worked as a Product Designer at Figueras Seating.</p>
+            <p>Interested in the user experience in product design, the interaction between the user and the designed product, and the meaning of materiality within this relationship.</p>
 
-    <!-- Add this after the close-canvas div -->
-    <div class="send-canvas" style="display: none;">
-        <button class="send-canvas-btn">
-            <img src="Images/Other/send-icon.png" alt="Send Drawing">
-        </button>
-        
-        <!-- Send Drawing Popup -->
-        <div class="send-popup" style="display: none;">
-            <p class="send-popup-text">Do you want to send your drawing to Marcel Pozo?</p>
-            <div class="form-group">
-                <input type="email" id="sender-email" name="sender-email" placeholder="Your email" required>
-            </div>
-            <button class="send-submit-btn">Yes, send!</button>
-        </div>
-    </div>
+            <h3 class="section-title">Studies and Training</h3>
+            <p>First studied Engineering in Industrial Design and Product Development at Universitat Politècnica de Catalunya, in Terrassa, Spain.</p>
+            <p>Then spent a year in Aalen, Germany, at Hochschule Aalen, deepening into product and industrial design.</p>
+            <p>And finished back in Barcelona to specialize in furniture design, studying a Master at Elisava Barcelona School of Design and Engineering.</p>
 
-    <!-- About Popup -->
-    <div class="info-popup about-popup" style="display: none;">
-        <div class="info-popup-content">
-            <button class="info-popup-close">×</button>
-            <img src="Images/Other/MarcelPozo_Design_About.jpg" alt="Marcel Pozo Design About" class="info-popup-image">
-            <h2 class="info-popup-title">About</h2>
-            <div class="info-popup-text">
-                <p>So this is Marcel. A 90's born in Barcelona, grown by the Mediterranean.<br>
-                    Grew up as a child surrounded by cardboard and paint, by pencils and tape. As an adult, that hasn't changed.</p>
-                <p>Always inspired by the world around, by its places and its people, and transforming it into new creations, into design, with the mindset of hopefully being able to inspire others and thus give back as much as received.</p>
+            <p>Also enrolled an online specialization course in Graphic Design from the California Institute of the Arts.</p>
+            <p>And even was officially trained in industrial 3D printing with the HP Jet Fusion 3D printer series by the HP Training Center.</p>
 
-                <h3 class="section-title">Studies and Training</h3>
-                <p>First studied Engineering in Industrial Design and Product Development at Universitat Politècnica de Catalunya, in Terrassa, Spain.</p>
-                <p>Then spent a year in Aalen, Germany, at Hochschule Aalen, deepening into product and industrial design.</p>
-                <p>And finished back in Barcelona to specialize in furniture design, studying a Master at Elisava Barcelona School of Design and Engineering.</p>
-
-                <p>Also enrolled an online specialization course in Graphic Design from the California Institute of the Arts.</p>
-                <p>And even was officially trained in industrial 3D printing with the HP Jet Fusion 3D printer series by the HP Training Center.</p>
-
-                <h3 class="section-title">Skills</h3>
-                <h4>Software</h4>
+            <h3 class="section-title">Skills</h3>
+            <h4>Software</h4>
                 <p>SolidWorks<br>
                 Adobe Illustrator<br>
                 Adobe Photoshop<br>
                 KeyShot</p>
-                
-                <h4>Handicraft and Tech</h4>
+            
+            <h4>Handicraft and Tech</h4>
                 <p>Drawing and Sketching<br>
                 Modelling<br>
                 Carpintery<br>
@@ -74,34 +53,26 @@
                 3D Printing<br>
                 Sewing + Machine sewing<br>
                 Pottery + Pottery wheel</p>
-                
-                <h4>Languages</h4>
+            
+            <h4>Languages</h4>
                 <p>Catalan<br>
                 Spanish<br>
                 English<br>
                 German<br>
                 French</p>
-            </div>
         </div>
     </div>
+</div>
 
     <!-- Contact Popup -->
     <div class="info-popup contact-popup" style="display: none;">
         <div class="info-popup-content">
             <button class="info-popup-close">×</button>
             <h2 class="info-popup-title">Contact</h2>
-            <form class="contact-form">
-                <div class="form-group">
-                    <input type="email" id="email" name="email" placeholder="Your email" required>
+                <div class="info-popup-text">
+                    <a href="mailto:marcelpozo@gmail.com" class="contact-link">marcelpozo@gmail.com</a><br>
+                    <a href="https://www.linkedin.com/in/marcel-pozo/" target="_blank" class="contact-link">LinkedIn</a>
                 </div>
-                <div class="form-group">
-                    <input type="text" id="subject" name="subject" placeholder="Subject" required>
-                </div>
-                <div class="form-group">
-                    <textarea id="message" name="message" placeholder="Message" required></textarea>
-                </div>
-                <button type="submit" class="contact-submit">Send</button>
-            </form>
         </div>
     </div>
 

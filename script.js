@@ -1,4 +1,132 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize cursor first
+    initializeCursor();
+
+    // Spotlight effect for home page
+    const spotlight = document.querySelector('.spotlight-background');
+    
+    if (spotlight) {
+        const handleMouseMove = (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            requestAnimationFrame(() => {
+                spotlight.style.opacity = '1';
+                spotlight.style.webkitMaskImage = `radial-gradient(circle 150px at ${x}px ${y}px, black 0%, black 75%, transparent 100%)`;
+                spotlight.style.maskImage = `radial-gradient(circle 150px at ${x}px ${y}px, black 0%, black 75%, transparent 100%)`;
+            });
+        };
+
+        document.addEventListener('mousemove', handleMouseMove);
+    }
+
+    // Move mobile menu functionality outside portfolio check
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
+    if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            menuToggle.textContent = mobileMenu.classList.contains('active') ? '×' : '+';
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!menuToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.remove('active');
+                menuToggle.textContent = '+';
+            }
+        });
+    }
+
+    // Canvas functionality for home page
+    const canvas = document.getElementById('drawingCanvas');
+    if (canvas) {  // Only run on home page
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        // Get cursor element
+        const cursor = document.querySelector('.custom-cursor');
+
+        // Set canvas size and style
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            ctx.fillStyle = '#ED1C24';  // CMYK Red
+            ctx.strokeStyle = '#ED1C24';
+            ctx.lineWidth = window.innerWidth <= 768 ? 4 : 6;
+            ctx.lineCap = 'round';
+        }
+
+        // Initialize canvas
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Drawing functions
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            // Get correct coordinates for both mouse and touch
+            const x = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const y = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(x, y);
+            ctx.stroke();
+
+            [lastX, lastY] = [x, y];
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            // Add drawing class to cursor
+            if (cursor) cursor.classList.add('drawing');
+            
+            // Get correct coordinates for both mouse and touch
+            const x = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            const y = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+            [lastX, lastY] = [x, y];
+
+            // Draw initial dot
+            ctx.beginPath();
+            ctx.arc(lastX, lastY, ctx.lineWidth/2, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            // Remove drawing class from cursor
+            if (cursor) cursor.classList.remove('drawing');
+        }
+
+        // Event listeners for mouse
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // Event listeners for touch
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();  // Prevent scrolling while drawing
+            startDrawing(e);
+        });
+        canvas.addEventListener('touchmove', (e) => {
+            e.preventDefault();  // Prevent scrolling while drawing
+            draw(e);
+        });
+        canvas.addEventListener('touchend', stopDrawing);
+
+        // Clear canvas with Esc key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        });
+    }
+
     const portfolioGrid = document.querySelector('.portfolio-grid');
     const numberOfProjects = 15;
     let currentProjectIndex = 0;
@@ -33,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             secondaryContent: `
                 <h3 class="section-title">This is Chette</h3>
-                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_2.jpg" alt="Chette" style="width: 100%; margin-bottom: 40px;">
+                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_2.jpg" alt="Chette" style="width: 100%;">
                
                 <p>Chette /∫εt/ originates from structural exploration and appreciation for wood as a raw material and the musicality of woodworking.</p>
                 <p>Its distinctive semicircular section provides the chair with a unique visual effect depending on the viewing angle, while also surprising by generating complementary volumes at the joints between its parts.</p>
@@ -41,9 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>Discreet yet full of personality, Chette integrates seamlessly with its surroundings. Plus, its compact size makes it ideal for small spaces. Perfect for warm, intimate spaces, especially those to be called home, Chette brings warmth and calm to any environment.</p>
                 <p>Chette is distributed partially disassembled to optimise transport volume.</p>
 
-                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_3.jpg" alt="Chette" style="width: 100%; margin: 40px 0;">
-
                 <h3 class="section-title">Chette as an adjective</h3>
+                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_3.jpg" alt="Chette" style="width: 100%;">
+
                 <p>Silent,<br>
                 intimate, warm, subtle, fluid,<br>
                 compact, personal, calm, natural, humble, supportive, clean, cozy, minimal, detail-oriented, global, timeless, youthful, peaceful, honest,<br>
@@ -51,30 +179,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 chette.</p>
                 <p>Chette is born from the vision to create a chair that, at first glance, might seem modest and quiet, yet holds a whole soul within – a personality that reveals itself in every curve in the chair; in every detail.</p>
 
-                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_4.jpg" alt="Chette" style="width: 100%; margin: 40px 0;">
-
                 <h3 class="section-title">The semicircular cross-section</h3>
+                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_4.jpg" alt="Chette" style="width: 100%;">
+
                 <p>The essence of Chette lies in its structure. Its distinctive semicircular shape (half a 50 mm diameter circle) creates a unique optical effect on the chair:</p>
                 <p>Despite keeping all legs a constant cross-section, their perceived volume changes depending on the viewing angle.</p>
                 <p>When seen from the back, the legs appear round, with an apparently circular cross-section. When observed from its front, Chette displays flat wide legs.</p>
                 <p>In fact, since the legs' axes are in different directions -they are not parallel-, the visual effect when viewing the chair from a non-orthogonal angle is that each leg seems to be different: some appear thick and robust, while others look slim and delicate.</p>
 
-                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_5.jpg" alt="Chette" style="width: 100%; margin: 40px 0;">
-
                 <h3 class="section-title">Joints: fluidity and volumes</h3>
+                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_5.jpg" alt="Chette" style="width: 100%;">
+
                 <p>Underneath the plywood seat, all four legs merge, united by the central H-shaped element, which is glued to the plywood seat itself. This element gives solidity to the whole structure, at the same time that acts as a component to give volumetric continuity and fluidity to the converging legs.</p>
                 <p>Focusing on the rear legs, there we find the epicentre of the volumetric essence of the chair's structure. Here, the semicircular slats of the legs themselves align with those extending from beneath the seat. Due to the direction of their curves, the flat faces of each of them meet and merge, creating a seamlessly circular cross-section along the union length.</p>
 
-                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_6.jpg" alt="Chette" style="width: 100%; margin: 40px 0;">
-
                 <h3 class="section-title">Materiality and manufacturing</h3>
+                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_6.jpg" alt="Chette" style="width: 100%;">
+
                 <p>Completely made of wood, Chette places the material at the heart of the chair's design. Through its natural composition, Chette champions the nature of wood and its endless properties, highlighting its potential through the diversity of manufacturing techniques used to create its various components.</p>
                 <p>The seat and backrest are made from curved plywood, with layers laminated perpendicularly (cross-laminated) to achieve optimal resistance properties.</p>
                 <p>On the other hand, the parts forming the structural skeleton of the chair are created either by milling solid wood or by pressing curved plywood, followed by milling. In the latter case, the wooden layers composing the plywood are oriented by aligning their grain in the same direction (vertically), both to maximise its strength and to avoid contrasting colour tones between layers, which would be more prominently visible after the semicircular milling of the legs.</p>
 
-                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_7.jpg" alt="Chette" style="width: 100%; margin: 40px 0;">
-
                 <h3 class="section-title">Parts, assemblability and sustainability</h3>
+                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_7.jpg" alt="Chette" style="width: 100%;">
+
                 <p>Chette is distributed partially disassembled, which optimises transport volume and therefore reduces environmental impact: Minimising the space required during shipping isn't only more cost- efficient, but also contributes to sustainability by reducing carbon emissions associated with transportation.</p>
                 <p>As for separate parts, there are the following:<br>
                 - Backrest + back legs assembly<br>
@@ -85,13 +213,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>All four elements are assembled and secured together using 12 metallic screws (3 per leg). The poka-yoke principle applied on the design ensures it can only be assembled in the correct way.</p>
                 <p>Thanks to being assemblable, parts can be replaced if damaged, providing a longer functional life in the whole product's life cycle.</p>
 
-                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_8.jpg" alt="Chette" style="width: 100%; margin: 40px 0;">
-
                 <h3 class="section-title">Lacquered colour palette</h3>
+                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_8.jpg" alt="Chette" style="width: 100%;">
+
                 <p>Apart from its default finish version in natural oak, Chette is also presented in the following colour palette.</p>
                 <p>With a fully lacquered finish, these four colours offer a variety of moods and personalities, yet all maintain an homogeneous colour saturation, allowing them all to harmonise with one another.</p>
 
-                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_9.jpg" alt="Chette" style="width: 100%; margin: 40px 0;">
+                <img src="Images/Product/Chette/MarcelPozo_ProductDesign_Chette_9.jpg" alt="Chette" style="width: 100%;">
             `
         },
         {
@@ -118,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>The warmth of rust rythming<br>
                 curtains of light in verses of shadows.</p>`,
             secondaryContent: `         
-                    <img src="Images/Product/Dokk1/MarcelPozo_ProductDesign_Dokk1_2.jpg" alt="Dokk1" style="width: 75%; margin: 40px 0;">
+                    <img src="Images/Product/Dokk1/MarcelPozo_ProductDesign_Dokk1_2.jpg" alt="Dokk1" style="width: 75%;">
 
                 <p>Dokk1 is the entry of the most robust materials into the warm cozy environments. It's the reinterpretation of the functionality and the perceived feeling of raw materials to create light beams of poetry.</p>
                 <p>As part of a room, Dokk1 highlights its closed circle concept: bringing back the structural materials first used for the construction of the building, to conclude with the last decoration details of the space.</p>
@@ -130,9 +258,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <p>Contrast on its textures, contrast on the irregularity within the regularity of its geometry, and contrast when turning the light on: the sculptural heavy and rusty cascade of iron takes a second plane, being the main character now the empty space between the bars, space that allows the trapped light inside to come out of the compactness of the element and be harmoniously projected and reflected on its surroundings.</p>
 
-                    <img src="Images/Product/Dokk1/MarcelPozo_ProductDesign_Dokk1_5.jpg" alt="Dokk1" style="width: 75%; margin: 40px 0;">
-                    <img src="Images/Product/Dokk1/MarcelPozo_ProductDesign_Dokk1_6.jpg" alt="Dokk1" style="width: 100%; margin: 40px 0;">
-                    <img src="Images/Product/Dokk1/MarcelPozo_ProductDesign_Dokk1_7.jpg" alt="Dokk1" style="width: 85%; margin: 40px 0;">
+                    <img src="Images/Product/Dokk1/MarcelPozo_ProductDesign_Dokk1_5.jpg" alt="Dokk1" style="width: 75%;">
+                    <img src="Images/Product/Dokk1/MarcelPozo_ProductDesign_Dokk1_6.jpg" alt="Dokk1" style="width: 100%;">
+                    <img src="Images/Product/Dokk1/MarcelPozo_ProductDesign_Dokk1_7.jpg" alt="Dokk1" style="width: 85%;">
             `
         },
         {
@@ -165,12 +293,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 src: 'Images/Product/Plex/MarcelPozo_ProductDesign_Plex_D.png'
             },
             secondaryContent: `
-                    <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_2.png" alt="Plex" style="width: 100%; margin: 40px 0;">
+                    <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_2.png" alt="Plex" style="width: 100%;">
                 
                 <p>Plex is installed by fixing each unit to the wall using 4 screws. Once this is done, the shelf-fixing system and adjustment is all screw-less.</p>
                 <p>As represented in the following picture, the flexibility of Plex will adapt the tab to the width of the shelf, keeping it tight in all cases.</p>
 
-                    <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_3.png" alt="Plex" style="width: 50%; margin: 40px 0;">
+                    <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_3.png" alt="Plex" style="width: 50%;">
 
                 <p>The lack of screws allow the repositioning of the shelf, its replacement, its reconfiguration... all, without damaging the elements and allowing them to be reused in the same conditions.</p>
 
@@ -179,20 +307,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 <p>Plus, Plex modules can be used in both directions, working both with their tabs pointing inwards or outwards, and therefore giving even more flexibility, adaptability and freedom both functional and aesthetically on their assembly:</p>
 
-                    <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_4.png" alt="Plex" style="width: 50%; margin: 40px 0;">
-                    <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_5.png" alt="Plex" style="width: 50%; margin: 40px 0;">
+                    <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_4.png" alt="Plex" style="width: 50%;">
+                    <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_5.png" alt="Plex" style="width: 50%;">
 
                     <div style="display: flex; gap: 20px; margin: 20px 0;">
                         <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_6.jpg" alt="Plex" style="width: 45%;">
                         <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_7.jpg" alt="Plex" style="width: 45%;">
                     </div>
-                    <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_8.jpg" alt="Plex" style="width: 50%; margin: 20px 0;">
+                    <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_8.jpg" alt="Plex" style="width: 50%;">
 
                     <div style="display: flex; gap: 20px; margin: 20px 0;">
                         <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_9.jpg" alt="Plex" style="width: 45%;">
                         <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_10.jpg" alt="Plex" style="width: 45%;">
                     </div>
-                    <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_11.jpg" alt="Plex" style="width: 60%; margin: 20px 0;">     
+                    <img src="Images/Product/Plex/MarcelPozo_ProductDesign_Plex_11.jpg" alt="Plex" style="width: 60%;">     
             `
         },
         {
@@ -224,14 +352,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>In aviation, this phenomenon is responsible for making airplanes fly:<br>
                 The shape of the wing profile causes an acceleration of the air over the upper surface of the wing as the aircraft moves.<br>
                 Combined with Bernoulli's Principle, which states that the pressure of a moving fluid decreases as its velocity increases, this results in a pressure difference between the upper and lower surfaces of the wing. This difference generates a new force acting vertically on the aircraft: the Lift Force, which, by counteracting and surpassing the weight of the airplane, enables its FLOATABILITY.</p>
+
+                <h3 class="section-title">Objective</h3>
+                <p>Achieve an extra level of comfort thanks to the properties of plywood.</p>
+
+                <h3 class="section-title">Proposal</h3>
+                <p>Give the seat of the chair the same flexibility found in its backrest, utilizing the moment of force generated relative to its anchoring point.<br>
+                The idea: a shell composed of two pieces, creating two cantilevered layers — the distinctive cantilever of the chair that provides a sense of floatability.</p>
+
+                <h3 class="section-title">The concept</h3>
+                <p>A compact seat where the two plywood pieces are connected together by a core:</p>
+                    <img src="Images/Product/Venturi/MarcelPozo_ProductDesign_Venturi_25.png" alt="Venturi" style="width: 35%;">
+                <p>SEAT + CORE + SHELL</p>
+
+                <h3 class="section-title">The 'core'</h3>
+                <p>Acting as joint between all pieces, it is made from recycled tires, being a commitment to sustainability through innovation while achieving a unique contrast and character between materials.</p>
+                <p>In the picture below you can see the evolution of the recycled material:</p>
+
+                    <img src="Images/Product/Venturi/MarcelPozo_ProductDesign_Venturi_26.png" alt="Venturi" style="width: 50%;">
                 
-                    <img src="Images/Product/Venturi/MarcelPozo_ProductDesign_Venturi_2.jpg" alt="Venturi" style="width: 100%; margin: 40px 0;">
-                    <img src="Images/Product/Venturi/MarcelPozo_ProductDesign_Venturi_3.jpg" alt="Venturi" style="width: 100%; margin: 40px 0;">
-                    <img src="Images/Product/Venturi/MarcelPozo_ProductDesign_Venturi_4.jpg" alt="Venturi" style="width: 100%; margin: 40px 0;">
-                    <img src="Images/Product/Venturi/MarcelPozo_ProductDesign_Venturi_22.png" alt="Venturi" style="width: 100%; margin: 40px 0;">
-                    <img src="Images/Product/Venturi/MarcelPozo_ProductDesign_Venturi_25.png" alt="Venturi" style="width: 100%; margin: 40px 0;">
-                    <img src="Images/Product/Venturi/MarcelPozo_ProductDesign_Venturi_26.png" alt="Venturi" style="width: 100%; margin: 40px 0;">
+                <h3 class="section-title">Options and finishes</h3>
+                <p>Apart from with or without armrests, the finishes on Venturi are also customizable.<br>
+                Wooden pieces can have a natural oak wood look or a colourful lacquered finish.<br>
+                Also the metal structure of the chair, powder coated, is presented in different colours.</p>
                 
+                    <img src="Images/Product/Venturi/MarcelPozo_ProductDesign_Venturi_3.jpg" alt="Venturi" style="width: 100%;">
+
+                <h3 class="section-title">Upholstery</h3>
+                <p>Following the upper palette, Venturi is also available with an upholstered seat version, offering an extra comfort layer on the seat.</p>
+                <p>In order to maintain the sustainable approach applied to the core, a sustainable textile, made from 100% recycled plastic waste is considered for the upholstery.</p>
+
+                    <img src="Images/Product/Venturi/MarcelPozo_ProductDesign_Venturi_4.jpg" alt="Venturi" style="width: 100%;">                
             `
         },
         {
@@ -257,12 +408,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 src: 'Images/Product/Trot/MarcelPozo_ProductDesign_Trot_D.png'
             },
             secondaryContent: `
-                    <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_2.jpg" alt="Trot" style="width: 100%; margin: 40px 0;">
+                    <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_2.jpg" alt="Trot" style="width: 100%;">
                 
                 <p>Pppbbpfff - snorts the horse as it begins to trot.<br>
                 On its back, I sit comfortably while the flexibility of the saddle absorbs the movement of the equine trot and adapts to my sitting. The spine remains straight and my legs are hanging. My posture stays upright; natural, relaxed, without tension, without lower back pain.</p>
                 
-                    <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_3.jpg" alt="Trot" style="width: 50%; margin: 30px;">
+                    <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_3.jpg" alt="Trot" style="width: 50%;">
 
                 <p>A look into the past to project the sitting of the future. The junction of formal and material innovation with the mathematical interpretation of organic forms to revalue history and tradition.</p>
                 
@@ -270,11 +421,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 <p>Its tubular structure, inspired by the anatomy of the horse, delineates the volumetric space - main focus of the piece. The woven seat seeks in mathematics the recreation of equine ergonomics, while, due to its composition, not only provides to the concept the differential contrast between its elements, but also creates a void under your legs, where you feel - though it's not there - the horse that was trotting long ago.</p>
 
-                <div style="display: flex; gap: 20px; margin: 20px 0;">
+                <div style="display: flex; gap: 20px; margin: 20px 0; justify-content: center;">
                     <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_4.jpg" alt="Trot" style="width: 45%;">
                     <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_5.jpg" alt="Trot" style="width: 45%;">
                 </div>
-                <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_6.jpg" alt="Trot" style="width: 45%; margin: 20px 0;">
+                <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_6.jpg" alt="Trot" style="width: 45%;">
 
                 <div style="display: flex; gap: 20px; margin: 20px 0;">
                     <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_7.jpg" alt="Trot" style="width: 45%;">
@@ -284,7 +435,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_9.jpg" alt="Trot" style="width: 45%;">
                     <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_10.jpg" alt="Trot" style="width: 45%;">
                 </div>
-                <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_11.jpg" alt="Trot" style="width: 45%; margin: 20px 0;">
+                <img src="Images/Product/Trot/MarcelPozo_ProductDesign_Trot_11.jpg" alt="Trot" style="width: 45%;">
             `
         },
         {
@@ -304,23 +455,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 Steel mechanism parts</p>
                 `,
             secondaryContent: `
-                <img src="Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_2.jpg" alt="Ribbo" style="width: 100%; margin: 40px 0;">
+                <img src="Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_2.jpg" alt="Ribbo" style="width: 100%;">
         
             <p>Ribbo has a wide base and a safe position lock, offering stability on its use, as well as comfort thanks to its ergonomic design.</p>
 
-                <img src="Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_3.jpg" alt="Ribbo" style="width: 50%; margin: 40px 0;">
+                <img src="Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_3.jpg" alt="Ribbo" style="width: 50%;">
 
             <p>With an aesthetic inspired by Joan Miró's paintings, RIBBO combines a contrast between fluent dynamic global shapes and robust elements.</p>
             <p>The colours on the device relate the different parts with their function, for a more intuitive user experience.</p>
 
-                <img src="Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_4.png" alt="Ribbo" style="width: 50%; margin: 40px 0;">
+                <img src="Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_4.png" alt="Ribbo" style="width: 50%;">
 
             <p>Because of all this, Ribbo is also a step further in the aesthetic of mobility aids for elderly.</p>
             <p>Focusing on the materials used for its construction, these have been chosen thinking of lightweight, resistance and recyclability.</p>
                
-                <img src="Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_5.jpg" alt="Ribbo" style="width: 75%; margin: 40px 0;">
-                <img src="Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_6.jpg" alt="Ribbo" style="width: 75%; margin: 40px 0;">
-                <img src="Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_7.jpg" alt="Ribbo" style="width: 75%; margin: 40px 0;">
+                <img src="Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_5.jpg" alt="Ribbo" style="width: 75%;">
+                <img src="Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_6.jpg" alt="Ribbo" style="width: 75%;">
+                <img src="Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_7.jpg" alt="Ribbo" style="width: 75%;">
     `
             
         },
@@ -341,19 +492,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 Injected plastic detail parts</p>
                 `,
             secondaryContent: `
-                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_2.jpg" alt="Nädd" style="width: 100%; margin: 40px 0;">
+                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_2.jpg" alt="Nädd" style="width: 100%;">
 
-            <p>Both usable with water or with other solvents, Nädd is the new partner when painting to guarantee a quick and efficient cleaning of your brushes. This compact design is the alternative to cleaning brushes in a single glass with water every time dirtier.</p>
+            <p>Both usable with water or with other solvents, Nädd /nεd/ is the new partner when painting to guarantee a quick and efficient cleaning of your brushes. This compact design is the alternative to cleaning brushes in a single glass with water every time dirtier.</p>
             <p>It structures the cleaning process in 3 steps, starting with a robust removal of the painting on the brush and finishing with a last rinsing with clean solvent, stored in the lower colourful silicone tank. Generous area for wringing is also available.</p>
 
-                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_3.jpg" alt="Nädd" style="width: 70%; margin: 40px 0;">
+                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_3.jpg" alt="Nädd" style="width: 70%;">
 
             <p>Nädd is offered in different colours on its silicone water-tank, and allows to keep back-up tanks.</p>
             <p>The materials used in the product, full of contrast, are the essence of the functionality of the device, as well as being a font of inspiration the connection these raw materials offer.</p>
 
-                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_4.jpg" alt="Nädd" style="width: 100%; margin: 40px 0;">
-                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_5.jpg" alt="Nädd" style="width: 100%; margin: 40px 0;">
-                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_6.jpg" alt="Nädd" style="width: 100%; margin: 40px 0;">
+                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_4.jpg" alt="Nädd" style="width: 100%;">
+                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_5.jpg" alt="Nädd" style="width: 100%;">
+                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_6.jpg" alt="Nädd" style="width: 100%;">
         `
         },
     ];
@@ -433,8 +584,8 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             title: 'Campaments IPSI',
-            thumbnailImage: 'Images/Brand/MarcelPozo_BrandDesign_CampamentsIpsi_0.jpg',
-            popupImage: 'Images/Brand/MarcelPozo_BrandDesign_CampamentsIpsi_1.jpg',
+            thumbnailImage: 'Images/Brand/MarcelPozo_BrandDesign_CampamentsIPSI_0.jpg',
+            popupImage: 'Images/Brand/MarcelPozo_BrandDesign_CampamentsIPSI_1.jpg',
             year: '2020',
             description: `
             <p>Imagotype designed for Campaments d'alta muntanya IPSI, summer camp in the Pyrenees.</p>
@@ -834,52 +985,118 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Add this to your existing JavaScript
-    const menuToggle = document.querySelector('.mobile-menu-toggle');
-    const mobileMenu = document.querySelector('.mobile-menu');
-
-    menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('active');
-        menuToggle.textContent = mobileMenu.classList.contains('active') ? '×' : '+';
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!menuToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
-            mobileMenu.classList.remove('active');
-            menuToggle.textContent = '+';
-        }
-    });
-
-    // Add after your existing event listeners
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    // Add touch event listeners to the popup content
-    document.querySelector('.popup-content').addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-
-    document.querySelector('.popup-content').addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    });
-
-    function handleSwipe() {
-        const swipeThreshold = 50; // minimum distance for a swipe
-        const diff = touchEndX - touchStartX;
+    // Remove hover cursor from popup content areas
+    const popupContentAreas = document.querySelectorAll('.popup-content, .popup-info, .info-popup-content');
+    
+    popupContentAreas.forEach(area => {
+        area.addEventListener('mouseenter', () => {
+            cursor.classList.remove('cursor-hover');
+        });
         
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                // Swiped right - go to previous
-                navigate(-1);
-            } else {
-                // Swiped left - go to next
-                navigate(1);
+        area.addEventListener('mouseleave', (e) => {
+            // Only add hover back if moving to a clickable element
+            if (e.relatedTarget && e.relatedTarget.closest('.popup-overlay')) {
+                cursor.classList.add('cursor-hover');
             }
-        }
-    }
+        });
+    });
 });
+
+// Separate cursor initialization function
+function initializeCursor() {
+    // Remove any existing cursors
+    const existingCursor = document.querySelector('.custom-cursor');
+    if (existingCursor) {
+        existingCursor.remove();
+    }
+
+    // Create new cursor
+    const cursor = document.createElement('div');
+    cursor.classList.add('custom-cursor');
+    document.body.appendChild(cursor);
+
+    // Show cursor only when mouse moves
+    document.addEventListener('mousemove', (e) => {
+        requestAnimationFrame(() => {
+            cursor.style.opacity = '1';  // Show cursor
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+    });
+
+    // Hide cursor when mouse leaves the window
+    document.addEventListener('mouseout', () => {
+        cursor.style.opacity = '0';
+    });
+
+    // Handle hover states
+    const clickableElements = document.querySelectorAll(`
+        .popup-overlay,                     /* Project popup overlay background */
+        .info-popup-overlay,                /* About/Contact popup overlay background */
+        .popup-nav.prev,                    /* Previous navigation arrow */
+        .popup-nav.next,                    /* Next navigation arrow */
+        .info-popup-close,                  /* Popup close buttons */
+        .popup-close,                       /* Project popup close button */
+        .pen-logo,                          /* Pen logo */
+        .footer-logo-link,                  /* Footer logo */
+        .nav-link,                          /* Navigation links */
+        .mobile-menu-toggle,                /* Mobile menu button */
+        .linkedin-link,                     /* LinkedIn icon */
+        .contact-link                       /* Contact popup links */
+    `);
+
+    clickableElements.forEach(element => {
+        element.addEventListener('mouseenter', () => {
+            cursor.classList.add('cursor-hover');
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            cursor.classList.remove('cursor-hover');
+        });
+    });
+
+    // Handle project thumbnails separately
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.closest('.portfolio-grid .project-item')) {
+            cursor.classList.add('cursor-hover');
+        }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.closest('.portfolio-grid .project-item')) {
+            cursor.classList.remove('cursor-hover');
+        }
+    });
+
+    // Handle popup overlays separately to ensure they work
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.matches('.popup-overlay, .info-popup-overlay')) {
+            cursor.classList.add('cursor-hover');
+        }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.matches('.popup-overlay, .info-popup-overlay')) {
+            cursor.classList.remove('cursor-hover');
+        }
+    });
+
+    // Remove hover cursor from popup content
+    const normalCursorAreas = document.querySelectorAll(`
+        .popup-content,                     /* Project popup content */
+        .popup-content img,                 /* Images inside popup */
+        .popup-info,                        /* Project popup info section */
+        .info-popup-content,                /* About/Contact popup content */
+        .popup-info-content,                /* Project info content */
+        .popup-secondary                    /* Secondary project content */
+    `);
+    
+    normalCursorAreas.forEach(area => {
+        area.addEventListener('mouseenter', () => {
+            cursor.classList.remove('cursor-hover');
+        });
+    });
+}
 
 // ABOUT and CONTACT Popups ------------------------------------------------------------
 
@@ -957,177 +1174,5 @@ document.addEventListener('DOMContentLoaded', function() {
             closeAllPopups();
         }
     });
-
-    // Add form submission handler
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            
-            const mailtoLink = `mailto:marcelpozo@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent('From: ' + email + '\n\n' + message)}`;
-            
-            window.location.href = mailtoLink;
-            
-            // Clear form
-            contactForm.reset();
-            
-            // Close popup
-            closeAllPopups();
-        });
-    }
-});
-// Canvas functionality for home page
-document.addEventListener('DOMContentLoaded', function() {
-    // Only run this code if we're on the home page (index.html)
-    const penLogo = document.querySelector('.pen-logo');
-    if (!penLogo) return; // Exit if pen logo isn't found (not on home page)
-
-    const closeCanvas = document.querySelector('.close-canvas');
-    const canvas = document.getElementById('drawingCanvas');
-    const ctx = canvas.getContext('2d');
-    let isDrawing = false;
-    let lastX = 0;
-    let lastY = 0;
-
-    // Set canvas size
-    function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        ctx.fillStyle = '#E31C23'; // CMYK Red (C:0 M:88 Y:85 K:0)
-        ctx.strokeStyle = '#E31C23';
-        
-        // Set different line widths for mobile and desktop
-        if (window.innerWidth <= 768) {
-            ctx.lineWidth = 6; // Thinner line for mobile
-        } else {
-            ctx.lineWidth = 8; // Thinner line for desktop
-        }
-        
-        ctx.lineCap = 'round';
-    }
-
-    // Initialize canvas
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    // Toggle drawing mode
-    penLogo.addEventListener('click', function() {
-        canvas.style.display = 'block';
-        penLogo.style.display = 'none';
-        closeCanvas.style.display = 'block';
-        sendCanvas.style.display = 'block';
-    });
-
-    closeCanvas.addEventListener('click', function() {
-        canvas.style.display = 'none';
-        penLogo.style.display = 'block';
-        closeCanvas.style.display = 'none';
-        sendCanvas.style.display = 'none';
-        // Clear canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-
-    // Drawing functions
-    function draw(e) {
-        if (!isDrawing) return;
-        
-        const x = e.clientX || e.touches[0].clientX;
-        const y = e.clientY || e.touches[0].clientY;
-
-        ctx.beginPath();
-        ctx.moveTo(lastX, lastY);
-        ctx.lineTo(x, y);
-        ctx.stroke();
-
-        [lastX, lastY] = [x, y];
-    }
-
-    function startDrawing(e) {
-        isDrawing = true;
-        [lastX, lastY] = [e.clientX || e.touches[0].clientX, e.clientY || e.touches[0].clientY];
-
-        // Draw dot on click with radius equal to half the line width
-        ctx.beginPath();
-        ctx.arc(lastX, lastY, ctx.lineWidth/2, 0, Math.PI * 2);
-        ctx.fill();
-    }
-
-    // Event listeners for drawing
-    canvas.addEventListener('mousedown', startDrawing);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', () => isDrawing = false);
-    canvas.addEventListener('mouseout', () => isDrawing = false);
-
-    // Touch support
-    canvas.addEventListener('touchstart', startDrawing);
-    canvas.addEventListener('touchmove', draw);
-    canvas.addEventListener('touchend', () => isDrawing = false);
-
-    // Add this inside the canvas functionality section
-    const sendCanvas = document.querySelector('.send-canvas');
-    const sendBtn = document.querySelector('.send-canvas-btn');
-    const sendPopup = document.querySelector('.send-popup');
-    const sendSubmitBtn = document.querySelector('.send-submit-btn');
-    const senderEmail = document.getElementById('sender-email');
-
-    // Toggle send popup
-    sendBtn.addEventListener('click', function() {
-        sendPopup.style.display = sendPopup.style.display === 'block' ? 'none' : 'block';
-    });
-
-    // Handle drawing submission
-    sendSubmitBtn.addEventListener('click', function() {
-        if (!senderEmail.value || !senderEmail.checkValidity()) {
-            alert('Please enter a valid email address');
-            senderEmail.focus();
-            return;
-        }
-
-        // Take screenshot of canvas
-        canvas.toBlob(function(blob) {
-            const formData = new FormData();
-            formData.append('image', blob, 'drawing.png');
-            formData.append('from', senderEmail.value);
-            formData.append('to', 'qwertyuiop@gmail.com');
-
-            // Send email with drawing
-            fetch('/send-drawing', {
-                method: 'POST',
-                body: formData
-            }).then(() => {
-                alert('Drawing sent successfully!');
-                sendPopup.style.display = 'none';
-                senderEmail.value = '';
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('Failed to send drawing. Please try again.');
-            });
-        }, 'image/png');
-    });
-
-    // Close popup when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!sendPopup.contains(e.target) && !sendBtn.contains(e.target)) {
-            sendPopup.style.display = 'none';
-        }
-    });
-});
-
-// Mobile menu toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    
-    if (mobileMenuToggle && mobileMenu) {
-        mobileMenuToggle.addEventListener('click', function() {
-            mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
-            this.textContent = mobileMenu.style.display === 'flex' ? '×' : '+';
-            this.style.transform = mobileMenu.style.display === 'flex' ? 'rotate(45deg)' : 'none';
-        });
-    }
 });
 
