@@ -125,6 +125,7 @@ transform: translateY(0);
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    overflow-y: auto;
 }
 
 .popup-content {
@@ -132,6 +133,7 @@ transform: translateY(0);
     width: 90%;
     max-width: 900px;
     background: transparent;
+    overflow-y: auto;
 }
 
 .popup-main {

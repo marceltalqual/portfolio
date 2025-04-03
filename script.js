@@ -813,7 +813,7 @@ document.addEventListener('DOMContentLoaded', function() {
         currentProjectIndex = index;
         updatePopupContent();
         popup.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+       /* document.body.style.overflow = 'hidden'; */
     }
 
     function closePopup() {
