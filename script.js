@@ -813,12 +813,25 @@ document.addEventListener('DOMContentLoaded', function() {
         currentProjectIndex = index;
         updatePopupContent();
         popup.style.display = 'flex';
-       /* document.body.style.overflow = 'hidden'; */
     }
 
     function closePopup() {
+        const overlay = document.querySelector('.popup-overlay');
+        const popupContent = document.querySelector('.popup-content');
+        const popupSecondary = document.querySelector('.popup-secondary');
+        
+        // Reset all scroll positions when closing
+        if (overlay) {
+            overlay.scrollTop = 0;
+        }
+        if (popupContent) {
+            popupContent.scrollTop = 0;
+        }
+        if (popupSecondary) {
+            popupSecondary.scrollTop = 0;
+        }
+        
         popup.style.display = 'none';
-        document.body.style.overflow = '';
     }
 
     function updatePopupContent() {
@@ -956,11 +969,17 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Reset scroll position before updating content
         const overlay = document.querySelector('.popup-overlay');
+        const popupContent = document.querySelector('.popup-content');
+        const popupSecondary = document.querySelector('.popup-secondary');
+        
         if (overlay) {
-            overlay.scrollTo({
-                top: 0,
-                behavior: 'instant'
-            });
+            overlay.scrollTop = 0;
+        }
+        if (popupContent) {
+            popupContent.scrollTop = 0;
+        }
+        if (popupSecondary) {
+            popupSecondary.scrollTop = 0;
         }
         
         updatePopupContent();
