@@ -439,6 +439,42 @@ document.addEventListener('DOMContentLoaded', function() {
             `
         },
         {
+            title: 'Gorg',
+            thumbnailImage: 'Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_0.jpg',
+            popupImage: 'Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_1.jpg',
+            description: 'Handcrafted ceramic plant pot',
+            year: '2025',
+            materials:`
+                <p>Ceramics on pottery wheel<br>
+                Enamel finish</p>
+                `,
+            secondaryContent: `
+                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_2.jpg" alt="Nädd" style="width: 100%;">
+
+            <p>Hand manufactured on the pottery wheel, Gorg is a single-piece unique plant pot resulting from breaking with the regularity and symetry of an object crafted on the wheel.</p>
+            
+            <p>
+            Hit while spinning on the wheel, clay is deformed adopting, resulting in abstract organic shapes.<br>
+            With the fluid shape it adopted, it was then enameled in watery colours that flow and overlap each other on its surface.
+            </p>
+
+                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_3.jpg" alt="Nädd" style="width: 70%;">
+
+            <p>Nädd is offered in different colours on its silicone water-tank, and allows to keep back-up tanks.</p>
+            <p>The materials used in the product, full of contrast, are the essence of the functionality of the device, as well as being a font of inspiration the connection these raw materials offer.</p>
+
+                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_4.jpg" alt="Nädd" style="width: 100%;">
+                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_5.jpg" alt="Nädd" style="width: 100%;">
+                <img src="Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_6.jpg" alt="Nädd" style="width: 100%;">
+        `
+        },
+
+
+
+
+
+
+        {
             title: 'Ribbo',
             thumbnailImage: 'Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_0.jpg',
             popupImage: 'Images/Product/Ribbo/MarcelPozo_ProductDesign_Ribbo_1.jpg',
