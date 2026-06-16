@@ -980,7 +980,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ` : ''}
 
                 <div class="copyright-popup">
-                    © 2025 Marcel Pozo. All rights reserved.
+                    © 2026 Marcel Pozo. All rights reserved.
                 </div>
             </div>
         `;
