@@ -440,8 +440,8 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         {
             title: 'Gorg',
-            thumbnailImage: 'Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_0.jpg',
-            popupImage: 'Images/Product/Naedd/MarcelPozo_ProductDesign_Naedd_1.jpg',
+            thumbnailImage: 'Images/Product/Gorg/MarcelPozo_ProductDesign_Gorg_0.jpg',
+            popupImage: 'Images/Product/Gorg/MarcelPozo_ProductDesign_Gorg_0.jpg',
             description: 'Handcrafted ceramic plant pot',
             year: '2025',
             materials:`
